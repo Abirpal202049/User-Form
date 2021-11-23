@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h2><a href="/">Home Page</a></h2>
+    <h1>Fill the fourm for new user</h1>
+    <form action="/v1/newuser" method="POST">
+        <label for="Name">Name : </label>
+        <input type="text" name="Name">
+        
+        <label for="College">College : </label>
+        <input type="text" name="College">
+        
+        <label for="Branch">Branch : </label>
+        <input type="text" name="Branch">
+
+        <button type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    </form>
+</body>
+</html>

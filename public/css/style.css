@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.navbar{
+    width: 100vw;
+    height: 2.5em;
+    background-color:#1f1f1f;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content:space-evenly;
+    font-size:1.5em;
+}
+.link{
+    text-decoration: none;
+    color: rgb(233, 233, 233);
+}
+h1{
+    display: flex;
+    align-items: center;
+    margin: 4em;
+    font-size:3.5em;
+    justify-content: center;
+    color: blueviolet;
+}

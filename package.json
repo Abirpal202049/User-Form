@@ -1,0 +1,22 @@
+{
+  "name": "fouramcall",
+  "version": "1.0.0",
+  "description": "Basic Forme for taking input and showing the details",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [
+    "express",
+    "ejs"
+  ],
+  "author": "Abir Pal",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.6",
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
