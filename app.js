@@ -1,6 +1,18 @@
 const express = require('express');
+const mongoose = require('mongoose');
+const student = require('./models/Student');
+
 const app = express();
 const PORT = process.env.PORT || 3000
+
+
+//? Database Connecting
+mongoose.connect("mongodb://localhost/collegestuddata", () => {
+        console.log("Database Connected...");
+})
+
+
+
 
 
 // Serving Static Files
@@ -24,4 +36,6 @@ const userRoute = require('./routes/users')
 app.use("/v1", userRoute)
 
 
-app.listen(PORT)
+app.listen(PORT , () => {
+    console.log(`Your Server is up and running at port: ${PORT}`);
+})

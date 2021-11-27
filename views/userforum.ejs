@@ -4,10 +4,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>New User Forme</title>
+    <style>
+        *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        }
+        .navbar{
+            width: 100vw;
+            height: 2.5em;
+            background-color:#1f1f1f;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content:space-evenly;
+            font-size:1.5em;
+        }
+        .link{
+            text-decoration: none;
+            color: rgb(233, 233, 233);
+        }
+    </style>
 </head>
 <body>
-    <h2><a href="/">Home Page</a></h2>
+    <div class="navbar">
+        <h2><a class="link" href="/">Home Page</a></h2>
+        <h2><a class="link" href="/v1/newuser">Creating New User</a></h2>
+    </div>
     <h1>Fill the fourm for new user</h1>
     <form action="/v1/newuser" method="POST">
         <label for="Name">Name : </label>

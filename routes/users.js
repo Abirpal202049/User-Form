@@ -1,16 +1,31 @@
 const express = require('express');
+const student = require('../models/Student');
 const router = express.Router();
 
 router.use(showrouter) //* Midddleware - 1 called
 
 
-const users = []
+//? Function to create User
+async function createStudent(n , c , b){
+    try{
+        const stud = await student.create({
+            name : n, 
+            college : c, 
+            branch : b
+        })
+        console.log("Student Data : ", stud);
+    } catch(err){
+        console.log("Error : ", err.message);
+    }
+}
+
 
 
 //! Route 1 - '/v1/userslist'
-router.get('/userslist', checkAdmin, function (req, res) {
+router.get('/userslist', checkAdmin, async function (req, res) {
     console.log("This Is The All Users List Route\n")
-    res.json({users})
+    const stud = await student.find()
+    res.json(stud)
 })
 
 
@@ -20,27 +35,34 @@ router.route("/newuser")
         console.log("This Is Creating New User Route\n")
         res.render('userforum')
     })
-    .post((req, res) => {
-        let obj = {
-            id : Date.now(),
-            Name : req.body.Name,
-            College : req.body.College,
-            Branch : req.body.Branch
-        }
-        users.push(obj)
-        console.log("Forum submitted successfully...", obj, "\n");
+    .post(async (req, res) => {
+        let Name = req.body.Name
+        let College = req.body.College
+        let Branch = req.body.Branch
+
+        createStudent(Name, College, Branch)
+
+
+        console.log("Forum submitted successfully...", "\n");
 
         // Redirecting User
-        res.redirect(`/v1/user/${users.length - 1}`)
+        // res.redirect(`/v1/user/${users.length - 1}`)
+        const singlestudentname = await student.findOne({name : Name}) 
+        console.log(singlestudentname._id);
+        res.redirect(`/v1/user/${singlestudentname._id}`)
     })
 
+    
 
-//! Route 3 - '/v1/:id'
+//! Route 3 - '/v1/user/:id'
 router.route("/user/:id")
-    .get((req, res) => {
+    .get(async (req, res) => {
         console.log("This Is For Specific User Route\n")
-        // res.json(users[req.params.id]) //* You can also parse the data into json
-        res.render('specificuser', {id : users[req.params.id].id, name : users[req.params.id].Name, coll : users[req.params.id].College, branch : users[req.params.id].Branch})
+
+        const data = await student.findOne({_id : req.params.id})
+
+        // res.json(data) //* You can also parse the data into json
+        res.render('specificuser', {id : data._id, name : data.name, coll : data.college, branch : data.branch})
     })
 
 
