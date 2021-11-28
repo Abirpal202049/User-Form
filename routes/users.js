@@ -5,7 +5,7 @@ const router = express.Router();
 router.use(showrouter) //* Midddleware - 1 called
 
 
-//? Function to create User
+//? Function to create User in database
 async function createStudent(n , c , b){
     try{
         const stud = await student.create({
@@ -23,46 +23,128 @@ async function createStudent(n , c , b){
 
 //! Route 1 - '/v1/userslist'
 router.get('/userslist', checkAdmin, async function (req, res) {
-    console.log("This Is The All Users List Route\n")
-    const stud = await student.find()
-    res.json(stud)
+    try{
+        console.log("This Is The All Users List Route\n")
+    
+        const stud = await student.find() //? Finding all the students
+        res.json(stud)
+    }
+    catch(err){
+        console.log("Error : ", err.message);
+        res.status(404).send("Error 404")
+    }
 })
 
 
 //! Route 2 - '/v1/newuser'
 router.route("/newuser")
+
     .get((req, res) => {
-        console.log("This Is Creating New User Route\n")
-        res.render('userforum')
+        try{
+            console.log("This Is Creating New User Route\n")
+            res.render('userforum' , {url : '/v1/newuser'})
+        }
+        catch(err){
+            console.log("Error : ", err.message);
+            res.status(404).send("Error 404")
+        }
     })
+
     .post(async (req, res) => {
-        let Name = req.body.Name
-        let College = req.body.College
-        let Branch = req.body.Branch
-
-        createStudent(Name, College, Branch)
-
-
-        console.log("Forum submitted successfully...", "\n");
-
-        // Redirecting User
-        // res.redirect(`/v1/user/${users.length - 1}`)
-        const singlestudentname = await student.findOne({name : Name}) 
-        console.log(singlestudentname._id);
-        res.redirect(`/v1/user/${singlestudentname._id}`)
+        try {
+            let Name = req.body.Name
+            let College = req.body.College
+            let Branch = req.body.Branch
+    
+            createStudent(Name, College, Branch) //? function for creating user is called 
+    
+    
+            console.log("Forum submitted successfully...", "\n");
+    
+    
+            const singlestudentname = await student.findOne({name : Name}) //? Finding data of the crated student
+            console.log(singlestudentname._id);
+    
+            // Redirecting User
+            res.redirect(`/v1/user/${singlestudentname._id}`)
+        }
+        catch (err) {
+            console.log("Error : ", err.message);
+            res.status(404).send("Error 404")
+        }
     })
 
     
 
 //! Route 3 - '/v1/user/:id'
 router.route("/user/:id")
+
     .get(async (req, res) => {
-        console.log("This Is For Specific User Route\n")
+        try{
+            console.log("This Is For Specific User Route\n")
+    
+            const data = await student.findOne({_id : req.params.id}) //? Finding data of specificuser based on their 'ObjectId'
+    
+            // res.json(data) //* You can also parse the data into json
+            res.render('specificuser', {id : data._id, name : data.name, coll : data.college, branch : data.branch})
+        }
+        catch(err){
+            console.log("Error : ", err.message);
+            res.status(404).send("Error 404")
+        }
+    })
 
-        const data = await student.findOne({_id : req.params.id})
+    // Deleting Data
+    .post(async (req, res) => {
+        try{
+            console.log("Delete User Route and Data deleted successfully...");
+    
+            const delitem = await student.deleteOne({_id : req.params.id}) //? Deleting data of specificuser based on their 'ObjectId'
+    
+    
+            // res.send("Item Deleted Successfully...")
+            res.render('deleemessage')
+        }
+        catch(err){
+            console.log("Error : ", err.message);
+            res.status(404).send("Error 404")
+        }
+    })
 
-        // res.json(data) //* You can also parse the data into json
-        res.render('specificuser', {id : data._id, name : data.name, coll : data.college, branch : data.branch})
+
+//! Route 4 - '/v1/user/update/:id'
+router
+    .route('/user/update/:id')
+
+    .get(async (req, res) => {
+        try{
+            // res.send("Updating User ...")
+            const data = await student.findOne({_id : req.params.id})
+            res.render('userforum' , {n : data.name, c : data.college, b : data.branch, url : `/v1/user/update/${data._id}` })
+        }
+        catch(err) {
+            console.log("Error : ", err.message);
+            res.status(404).send("Error 404")
+        }
+    })
+
+    .post(async (req, res) => {
+        try{
+            console.log("Got the data...")
+            let Name = req.body.Name
+            let College = req.body.College
+            let Branch = req.body.Branch
+    
+            const updatedata = await student.updateOne({_id : req.params.id}, {$set : {name : Name, college : College, branch : Branch}})
+    
+            // res.json(updatedata)
+    
+            res.redirect(`/v1/user/${req.params.id}`)
+        }
+        catch(err){
+            console.log("Error : ", err.message);
+            res.status(404).send("Error 404")
+        }
     })
 
 

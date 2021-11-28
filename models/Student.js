@@ -7,6 +7,7 @@ const studentSchema = new mongoose.Schema({
     },
     college : {
         type : String,
+        uppercase : true,
     },
     branch : {
         type : String,

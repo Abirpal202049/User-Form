@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Specific User</title>
+    <title>Document</title>
     <style>
         *{
         margin: 0;
@@ -25,6 +25,14 @@
             text-decoration: none;
             color: rgb(233, 233, 233);
         }
+        h1{
+            display: flex;
+            align-items: center;
+            margin: 4em;
+            font-size:3.5em;
+            justify-content: center;
+            color: rgb(211, 67, 67);
+        }
     </style>
 </head>
 <body>
@@ -33,16 +41,6 @@
         <h2><a class="link" href="/v1/newuser">Creating New User</a></h2>
         <h2><a class="link" href="/v1/userslist">See All Users</a></h2>
     </div>
-    <h1>User No. <%= id %> </h1>
-    <h2>Here Is Your Details</h2>
-    <h3>Name - <%= name %></h3>
-    <h3>College Name - <%= coll %></h3>
-    <h3>Branch - <%= branch %></h3>
-    <form action="/v1/user/<%= id %> " method="POST">
-        <button type="submit">Delete Data</button>
-    </form>
-    <form action="/v1/user/update/<%= id %> " method="GET">
-        <button type="submit">Update Data</button>
-    </form>
+    <h1>Data Deleted Successfully...</h1>
 </body>
 </html>

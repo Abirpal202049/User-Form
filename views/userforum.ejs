@@ -33,15 +33,15 @@
         <h2><a class="link" href="/v1/newuser">Creating New User</a></h2>
     </div>
     <h1>Fill the fourm for new user</h1>
-    <form action="/v1/newuser" method="POST">
+    <form action="<%= locals.url %> " method="POST">
         <label for="Name">Name : </label>
-        <input type="text" name="Name">
+        <input type="text" name="Name" value="<%= locals.n %> ">
         
         <label for="College">College : </label>
-        <input type="text" name="College">
+        <input type="text" name="College" value="<%= locals.c %> ">
         
         <label for="Branch">Branch : </label>
-        <input type="text" name="Branch">
+        <input type="text" name="Branch" value="<%= locals.b %> ">
 
         <button type="submit">Submit</button>
         <button type="reset">Reset</button>
