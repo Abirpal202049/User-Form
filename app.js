@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 
 const app = express();
 const PORT = process.env.PORT || 3000
@@ -16,7 +17,9 @@ mongoose.connect("mongodb://localhost/collegestuddata", () => {
 
 // Serving Static Files
 //! Route 0 - '/'
-app.use(express.static("public")) //* Built In Middleware
+app.use('/',express.static("public")) //* Built In Middleware
+app.use('/alluser',express.static(path.join(__dirname, 'public/main.html'))) //* Built In Middleware
+
 
 
 //* Built In Middleware

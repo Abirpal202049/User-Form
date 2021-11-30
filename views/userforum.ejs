@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>New User Forme</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <style>
         *{
         margin: 0;
@@ -25,26 +26,67 @@
             text-decoration: none;
             color: rgb(233, 233, 233);
         }
+        .formbox{
+            display: flex;
+            width: 100vw;
+            height : 30vw;
+            align-items: center;
+            /* border: 2px solid red; */
+            justify-content: center;
+            flex-direction: column;
+        }
+        .main-form{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .element{
+            margin: 1em;
+        }
+        .btn{
+            margin:0.2rem;
+            width:111px;
+        }
+        .form-title{
+            margin: 1.5em;
+            color: rgb(10, 133, 10);
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
         <h2><a class="link" href="/">Home Page</a></h2>
         <h2><a class="link" href="/v1/newuser">Creating New User</a></h2>
+        <h2><a class="link" href="/alluser">See All Users</a></h2>
     </div>
-    <h1>Fill the fourm for new user</h1>
-    <form action="<%= locals.url %> " method="POST">
-        <label for="Name">Name : </label>
-        <input type="text" name="Name" value="<%= locals.n %> ">
-        
-        <label for="College">College : </label>
-        <input type="text" name="College" value="<%= locals.c %> ">
-        
-        <label for="Branch">Branch : </label>
-        <input type="text" name="Branch" value="<%= locals.b %> ">
+    <div class="formbox">
+        <h1 class="form-title"><%= locals.message %> </h1>
+        <form action="<%= locals.url %> " method="POST" class="main-form">
+            <div class="element">
+                <label for="Name">Name : </label>
+                <input type="text" name="Name" value="<%= locals.n %> ">
+            </div>
 
-        <button type="submit">Submit</button>
-        <button type="reset">Reset</button>
-    </form>
+            <div class="element">
+                <label for="College">College : </label>
+                <input type="text" name="College" value="<%= locals.c %> ">
+            </div>
+
+            <div class="element">
+                <label for="Branch">Branch : </label>
+                <input type="text" name="Branch" value="<%= locals.b %> ">
+            </div>
+
+            <div class="element">
+                <button class="btn btn-success" type="submit">Submit</button>
+                <button class="btn btn-primary" type="reset">Reset</button>
+            </div>
+
+            
+            
+    
+        </form>
+    </div>
 </body>
 </html>

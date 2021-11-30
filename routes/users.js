@@ -42,7 +42,7 @@ router.route("/newuser")
     .get((req, res) => {
         try{
             console.log("This Is Creating New User Route\n")
-            res.render('userforum' , {url : '/v1/newuser'})
+            res.render('userforum' , {url : '/v1/newuser', message : 'Fill the fourm for new User'}) //! Rendering userforme
         }
         catch(err){
             console.log("Error : ", err.message);
@@ -66,7 +66,8 @@ router.route("/newuser")
             console.log(singlestudentname._id);
     
             // Redirecting User
-            res.redirect(`/v1/user/${singlestudentname._id}`)
+            // res.redirect(`/v1/user/${singlestudentname._id}`)
+            res.redirect(`/alluser`)
         }
         catch (err) {
             console.log("Error : ", err.message);
@@ -86,7 +87,7 @@ router.route("/user/:id")
             const data = await student.findOne({_id : req.params.id}) //? Finding data of specificuser based on their 'ObjectId'
     
             // res.json(data) //* You can also parse the data into json
-            res.render('specificuser', {id : data._id, name : data.name, coll : data.college, branch : data.branch})
+            res.render('specificuser', {id : data._id, name : data.name, coll : data.college, branch : data.branch}) //! Rendering specific user
         }
         catch(err){
             console.log("Error : ", err.message);
@@ -97,13 +98,22 @@ router.route("/user/:id")
     // Deleting Data
     .post(async (req, res) => {
         try{
-            console.log("Delete User Route and Data deleted successfully...");
-    
-            const delitem = await student.deleteOne({_id : req.params.id}) //? Deleting data of specificuser based on their 'ObjectId'
-    
-    
-            // res.send("Item Deleted Successfully...")
-            res.render('deleemessage')
+            sure = 'yes'
+            
+            if(sure === 'yes'){
+                console.log("Delete User Route and Data deleted successfully...");
+        
+                const delitem = await student.deleteOne({_id : req.params.id}) //? Deleting data of specificuser based on their 'ObjectId'
+        
+                // res.send("Item Deleted Successfully...")
+                // res.render('deleemessage') //! Rendering Delete message page
+                res.redirect('/alluser')
+            }
+            else{
+                res.redirect('/')
+            }
+
+
         }
         catch(err){
             console.log("Error : ", err.message);
@@ -120,7 +130,7 @@ router
         try{
             // res.send("Updating User ...")
             const data = await student.findOne({_id : req.params.id})
-            res.render('userforum' , {n : data.name, c : data.college, b : data.branch, url : `/v1/user/update/${data._id}` })
+            res.render('userforum' , {n : data.name, c : data.college, b : data.branch, url : `/v1/user/update/${data._id}`, message :"Update Your Data"  }) //! Rendering userforme
         }
         catch(err) {
             console.log("Error : ", err.message);
@@ -128,6 +138,7 @@ router
         }
     })
 
+    // Update Data
     .post(async (req, res) => {
         try{
             console.log("Got the data...")
@@ -136,10 +147,11 @@ router
             let Branch = req.body.Branch
     
             const updatedata = await student.updateOne({_id : req.params.id}, {$set : {name : Name, college : College, branch : Branch}})
-    
             // res.json(updatedata)
     
-            res.redirect(`/v1/user/${req.params.id}`)
+            // res.redirect(`/v1/user/${req.params.id}`)
+            res.redirect('/alluser')
+
         }
         catch(err){
             console.log("Error : ", err.message);
